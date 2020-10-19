@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Navbar, Nav} from 'react-bootstrap';
 import {Link} from 'react-router-dom'
 
-Te
+
 class NavBar extends React.Component {
     
 	render() {
