@@ -1,5 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {Link} from 'react-router-dom'
 import { Card, Button } from 'react-bootstrap';
 
 class CookbookCard extends React.Component {
@@ -21,6 +22,8 @@ class CookbookCard extends React.Component {
 
     
 	render() {
+        console.log(this.props.routerProps)
+        console.log("cookbook props:", this.props.cookbook)
 		return (
 			<div className="cookbook-card">
                 <Card style={{ width: '18rem' }}>
@@ -30,7 +33,9 @@ class CookbookCard extends React.Component {
                     <Card.Text>
                     Cookbook description to go here!
                     </Card.Text>
-                    <Button variant="primary">Recipes</Button>
+                    <Link to={`/cookbooks/${this.props.cookbook.owner_id}/${this.props.cookbook.id}`}>
+                        <Button variant="primary">See More</Button>
+                    </Link>
                     {this.followedButton()}
                 </Card.Body>
                 </Card>

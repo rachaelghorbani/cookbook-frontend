@@ -15,7 +15,7 @@ class NavBar extends React.Component {
 						<Nav className="mr-auto">
                             {this.props.user.username}
 							<Nav.Link ><Link to="/cookbooks">All Cookbooks</Link></Nav.Link>
-                            <Nav.Link ><Link to={`/user/${this.props.user.id}/cookbooks`}>My Cookbooks</Link></Nav.Link>
+                            <Nav.Link ><Link to={`/cookbooks/${this.props.user.id}`}>My Cookbooks</Link></Nav.Link>
                             <Nav.Link><Link to="/cookbooks/new">New Cookbook</Link></Nav.Link>
                             <Nav.Link><Link to="/recipes/new">New Recipe</Link></Nav.Link>
                             <Nav.Link><Link to="/" onClick={this.props.logout}>Logout</Link></Nav.Link>
