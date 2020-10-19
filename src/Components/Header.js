@@ -6,7 +6,7 @@ import Food from '../assets/food.jpg'
 
 const Styles = styled.div`
 .jumbo {
-    background: src(${Food}) no-repeat fixed-bottom;
+    background-image: url(${Food}) no-repeat fixed-bottom;
     background-size: cover;
     color: #efefef;
     height: 200px;
