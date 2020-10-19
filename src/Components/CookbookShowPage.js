@@ -1,8 +1,10 @@
 import React from 'react'
 
 const CookbookShowPage = props => {
+    console.log(props)
     return (
-        <div>show</div>
+        <div>{props.cookbook.title}</div>
+        
     )
 }
 

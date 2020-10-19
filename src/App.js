@@ -21,7 +21,6 @@ class App extends React.Component {
 	};
 
 	loginUser = ({ username }) => {
-		console.log('before fetch, ', username);
 
 		let options = {
 			method: 'POST',
@@ -40,7 +39,6 @@ class App extends React.Component {
 	};
 
 	componentsToRender = () => {
-		console.log(`${this.state.currentUser.username}`);
 
 		if (this.state.currentUser.username) {
 			return (
