@@ -47,7 +47,6 @@ class CookbookCard extends React.Component {
 	//if this.props.owned add edit and delete buttons, otherwise add the follow button
 
 	render() {
-		console.log(this.props);
 		return (
 			<div className="cookbook-card">
 				<Card style={{ width: '18rem' }}>

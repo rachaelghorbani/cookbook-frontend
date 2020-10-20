@@ -8,19 +8,21 @@ const RecipeCard = (props) => {
 			return props.recipe.photos[0].img_url;
 		}
 	};
-    console.log(props.recipe.photos)
-
+console.log(props)
 	return (
+        <div className="recipe-card">
 		<Card style={{ width: '18rem', margin: '5px' }}>
 			<Card.Img variant="top" src={showPhoto()} alt="You Should See Food Here." />
 			<Card.Body>
 				<Card.Title>{props.recipe.title}</Card.Title>
 				<Card.Text>Cookbook description to go here!</Card.Text>
-				<Link to={`/recipes/${props.recipe.id}`}>
+				{/* /cookbooks/:user_id/:cookbook_id/recipe_id */}
+				<Link to={`/cookbooks/${props.owner_id}/${props.cookbook_id}/${props.recipe.id}`}>
 					<Button variant="primary">See Recipe</Button>
 				</Link>
 			</Card.Body>
 		</Card>
+        </div>
 	);
 };
 

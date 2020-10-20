@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Navbar, Nav, Row, Col} from 'react-bootstrap';
+import {Navbar, Nav} from 'react-bootstrap';
 import {Link} from 'react-router-dom'
 
 
@@ -19,11 +19,12 @@ class NavBar extends React.Component {
 
 						<Nav className="ml-auto align-items-center">
                             {this.props.user.username}
-							<Nav.Link ><Link to="/cookbooks">All Cookbooks</Link></Nav.Link>
-                            <Nav.Link ><Link to={`/cookbooks/${this.props.user.id}`}>My Cookbooks</Link></Nav.Link>
-                            <Nav.Link><Link to="/cookbooks/new">New Cookbook</Link></Nav.Link>
-                            <Nav.Link><Link to="/recipes/new">New Recipe</Link></Nav.Link>
-                            <Nav.Link><Link to="/" onClick={this.props.logout}>Logout</Link></Nav.Link>
+							<Link className="mx-2" to="/cookbooks">All Cookbooks</Link>
+                            <Link className="mx-2" to={`/cookbooks/${this.props.user.id}`}>My Cookbooks</Link>
+                            <Link className="mx-2" to="/cookbooks/new">New Cookbook</Link>
+                            <Link className="mx-2" to="/cookbooks/recipes">All Recipes</Link>
+                            <Link className="mx-2" to="/recipes/new">New Recipe</Link>
+                            <Link className="mx-2" to="/" onClick={this.props.logout}>Logout</Link>
 							
 						</Nav>
 

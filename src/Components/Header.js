@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Jumbotron, Container} from 'react-bootstrap'
+import {Jumbotron} from 'react-bootstrap'
 import '../App.css'
 
 class Header extends React.Component {

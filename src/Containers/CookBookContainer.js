@@ -5,6 +5,10 @@ import { CardGroup, Container } from 'react-bootstrap';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import NewCookbookForm from '../Components/NewCookbookForm'
 import CookbookShowPage from '../Components/CookbookShowPage'
+import RecipeContainer from './RecipeContainer'
+import RecipeShowPage from '../Components/RecipeShowPage'
+
+// /cookbook-frontend/src/Containers/RecipeContainer.js
 
 const cookbooksURL = 'http://localhost:3000/cookbooks/';
 
@@ -13,7 +17,15 @@ class CookBookContainer extends React.Component {
         allCookbooks: [],
         newCookbookTitle: "",
         newCookbookDescription: ""
-	};
+    };
+    
+    getRecipe = (recipe_id) => {
+            console.log(this.state.allCookbooks)
+            let foundCb = this.state.allCookbooks.find(cb => cb.recipes.find(r => r.id === recipe_id))
+            let foundRecipe = foundCb.recipes.find(r => r.id === recipe_id)
+            console.log(foundRecipe)
+            return foundRecipe
+    }
 
     getCookbook = (cookbook_id) => {
             return this.state.allCookbooks.find(cb => {
@@ -30,6 +42,7 @@ class CookBookContainer extends React.Component {
     
 	renderFollowedCookbooks = () => {
         const userLikedCookbooks = this.state.allCookbooks.filter(cookbook => {
+            
             for(let follower of cookbook.followers){
                 return follower.follower_id === this.props.user.id
             }
@@ -118,11 +131,28 @@ class CookBookContainer extends React.Component {
     }
 
 	render() {
-
+console.log(this.state.allCookbooks)
 		return (
 			<Switch>
                 {/* new cookbook */}
                 <Route path="/cookbooks/new" render={() => <NewCookbookForm description={this.state.newCookbookDescription}title={this.state.newCookbookTitle} changeHandler={this.handleNewCookbookChange} submitHandler={this.submitNewForm}/>} />
+
+                {/* all recipes */}
+                <Route path="/cookbooks/recipes" render={() => <RecipeContainer cookbooks={this.state.allCookbooks} />} />
+
+                {/* recipe show page */}
+                
+                <Route path ="/cookbooks/:user_id/:cookbook_id/:recipe_id" render={({match}) => {
+                    const id = parseInt(match.params.recipe_id)
+                    if(this.state.allCookbooks.length > 0){
+                        const recipe = this.getRecipe(id)
+                        return (
+
+
+                            <RecipeShowPage recipe={recipe}/>
+                        )
+                    }
+            }} />
 
                 {/* individual cookbook show page */}
 				<Route path="/cookbooks/:user_id/:cookbook_id" render={({match}) => {
@@ -145,6 +175,7 @@ class CookBookContainer extends React.Component {
                    )
                 
                 }} />
+
                 {/* All cookbooks */}
 				<Route path="/cookbooks" render={() => {
                     return (
@@ -153,7 +184,8 @@ class CookBookContainer extends React.Component {
                     </Container>
                     )
                     
-                } 
+                }
+
                     }/>
 			</Switch>
 		);
