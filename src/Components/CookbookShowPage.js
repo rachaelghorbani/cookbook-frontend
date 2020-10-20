@@ -22,15 +22,15 @@ const CookbookShowPage = (props) => {
 	return (
 		<Container className="mt-2">
 			<Row>
-				<Col className="border border-primary">
+				<Col >
 					<img className="img-responsive w-100" src={getTitleImage()} alt="food pic" />
 				</Col>
-				<Col className="border border-danger">
+				<Col >
 					<Row>
-						<Col lg={12} className="border border-dark text-center recipe-title">
+						<Col lg={12} className="border-bottom  text-center recipe-title">
 							{props.cookbook.title}
 						</Col>
-						<Col lg={12} className="border border-primary text-center mt-3">
+						<Col lg={12} className=" text-center mt-3">
 							{props.cookbook.description}
 						</Col>
 					</Row>
@@ -40,15 +40,11 @@ const CookbookShowPage = (props) => {
 				<Col className="d-flex justify-content-between align-items-center m-2">
 					Recipes found in this cookbook
                     <SearchRecipesFromCookbook />
-					{/* <div className="md-form mt-0 w-50 ">
-						<input className="form-control" type="text" placeholder="Search" aria-label="Search" />
-					</div> */}
 				</Col>
 			</Row>
 			<Row className="mt-6">
-				<Col className="border border-info">{renderRecipes()}</Col>
+				<Col className="">{renderRecipes()}</Col>
 			</Row>
-			{/* <div>{props.cookbook.title}</div> */}
 		</Container>
 	);
 };

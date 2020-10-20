@@ -9,8 +9,7 @@ import WelcomeContainer from './Containers/WelcomeContainer';
 import CookBookContainer from './Containers/CookBookContainer';
 import Home from './Components/Home';
 
-const usersURL = 'http://localhost:3000/users/';
-
+const loginURL = 'http://localhost:3000/login'
 class App extends React.Component {
 	state = {
 		currentUser: {}
@@ -20,23 +19,21 @@ class App extends React.Component {
 		this.setState({ currentUser: {} });
 	};
 
-	loginUser = ({ username }) => {
-
-		let options = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Accepts: 'application/json'
-			},
-			body: JSON.stringify({ username })
-		};
-
-		fetch(usersURL, options).then((resp) => resp.json()).then((user) => {
-			this.setState({
-				currentUser: user
-			});
-		});
-	};
+	loginUser = ({ username, password }) => {
+        let options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "Accepts": 'application/json'
+            },
+            body: JSON.stringify({ username: username, password: password})
+        };
+        fetch(loginURL, options).then((resp) => resp.json()).then((data) => {
+            this.setState({
+                currentUser: data.user
+            });
+        });
+    };
 
 	componentsToRender = () => {
 
