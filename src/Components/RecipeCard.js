@@ -17,7 +17,7 @@ const RecipeCard = (props) => {
 				<Card.Title>{props.recipe.title}</Card.Title>
 				<Card.Text>Cookbook description to go here!</Card.Text>
 				<Link to={`/recipes/${props.recipe.id}`}>
-					<Button variant="primary">See More</Button>
+					<Button variant="primary">See Recipe</Button>
 				</Link>
 			</Card.Body>
 		</Card>

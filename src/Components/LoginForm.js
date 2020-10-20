@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 class LoginForm extends React.Component {
@@ -24,6 +24,7 @@ class LoginForm extends React.Component {
 
 	render() {
 		return (
+            <Container>
 			<Form onSubmit={this.submitHandler}>
 				<Form.Group controlId="formBasicUsername">
 					<Form.Label>Username:</Form.Label>
@@ -42,6 +43,7 @@ class LoginForm extends React.Component {
                 
                 
 			</Form>
+            </Container>
 		);
 	}
 }

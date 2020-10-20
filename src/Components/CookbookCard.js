@@ -51,7 +51,7 @@ class CookbookCard extends React.Component {
 		return (
 			<div className="cookbook-card">
 				<Card style={{ width: '18rem' }}>
-					<Card.Img variant="top" src={this.getTitleImage()} alt="You Should See Food Here." />
+					<Card.Img className="card-image" variant="top" src={this.getTitleImage()} alt="You Should See Food Here." />
 					<Card.Body>
 						<Card.Title>{this.props.cookbook.title}</Card.Title>
 						<Card.Text>Cookbook description to go here!</Card.Text>

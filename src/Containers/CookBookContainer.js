@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CookbookCard from '../Components/CookbookCard';
-import { CardGroup } from 'react-bootstrap';
+import { CardGroup, Container } from 'react-bootstrap';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import NewCookbookForm from '../Components/NewCookbookForm'
 import CookbookShowPage from '../Components/CookbookShowPage'
@@ -122,15 +122,25 @@ class CookBookContainer extends React.Component {
                 {/* user homepage with all owned and followed cookbooks */}
 				<Route path="/cookbooks/:user_id" render={() => {
                    return (
+                       <Container>
                    <CardGroup>
                         {this.renderOwnedCookbooks()}
                         {this.renderFollowedCookbooks()}
                     </CardGroup>
+                    </Container>
                    )
                 
                 }} />
                 {/* All cookbooks */}
-				<Route path="/cookbooks" render={() => this.renderAllCookbooks()} />
+				<Route path="/cookbooks" render={() => {
+                    return (
+                    <Container>
+                        {this.renderAllCookbooks()}
+                    </Container>
+                    )
+                    
+                } 
+                    }/>
 			</Switch>
 		);
 	}
