@@ -11,11 +11,30 @@ import Home from './Components/Home';
 
 const loginURL = 'http://localhost:3000/login'
 class App extends React.Component {
+
 	state = {
 		currentUser: {}
 	};
 
+    componentDidMount = () => {
+		if (window.sessionStorage.accessToken) {
+			fetch('http://localhost:3000/', {
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${window.sessionStorage.accessToken}`
+				  }
+			})
+			.then(resp => resp.json())
+			.then(data => {
+				this.setState({
+                currentUser: data.user
+            })
+			})
+		}
+	}
+	
 	logoutUser = () => {
+        window.sessionStorage.clear()
 		this.setState({ currentUser: {} });
 	};
 
@@ -29,15 +48,18 @@ class App extends React.Component {
             body: JSON.stringify({ username: username, password: password})
         };
         fetch(loginURL, options).then((resp) => resp.json()).then((data) => {
+            window.sessionStorage.accessToken = data.jwt
             this.setState({
                 currentUser: data.user
             });
         });
-    };
+	};
+	
+
 
 	componentsToRender = () => {
 
-		if (this.state.currentUser.username) {
+		if (window.sessionStorage.accessToken && this.state.currentUser.username) {
 			return (
 				<div>
 					<Header />
@@ -55,9 +77,6 @@ class App extends React.Component {
 								/>
 							)}
 						/>
-
-
-
 						<Route path="/" render={() => <Home user={this.state.currentUser} />} />
 					</Switch>
 					{/* <Route path={`/user/${this.state.currentUser.id}/cookbooks`} render={(windowProps) => <CookBookContainer windowProps={windowProps}owned={this.state.currentUser.owned_cookbooks} followed={this.state.currentUser.followed_cookbooks} /> } /> */}

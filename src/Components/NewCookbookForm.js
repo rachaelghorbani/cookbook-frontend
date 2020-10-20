@@ -8,11 +8,13 @@ const NewCookbookForm = (props) => {
 				<Form.Label>Title:</Form.Label>
 				<Form.Control
 					type="text"
-					name="title"
+					name="newCookbookTitle"
 					placeholder="Enter title"
 					value={props.title}
 					onChange={props.changeHandler}
 				/>
+                <Form.Label>Description:</Form.Label>
+                <Form.Control type="textarea" name="newCookbookDescription" value={props.description} placeholder="Enter description" onChange={props.changeHandler} />
 			</Form.Group>
 
 			<Button variant="primary" type="submit">

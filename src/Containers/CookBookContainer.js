@@ -11,7 +11,8 @@ const cookbooksURL = 'http://localhost:3000/cookbooks/';
 class CookBookContainer extends React.Component {
 	state = {
         allCookbooks: [],
-        newCookbookTitle: ""
+        newCookbookTitle: "",
+        newCookbookDescription: ""
 	};
 
     getCookbook = (cookbook_id) => {
@@ -23,7 +24,7 @@ class CookBookContainer extends React.Component {
 	renderOwnedCookbooks = () => {
         const userOwnedCookbooks = this.state.allCookbooks.filter(cb => cb.owner.owner_id === this.props.user.id);
 		if (userOwnedCookbooks.length > 0) {
-			return userOwnedCookbooks.map((cb) => <CookbookCard deleteHandler={this.deleteCookbookHandler} cookbook={cb} owned={true}/>);
+			return userOwnedCookbooks.map((cb) => <CookbookCard key={cb.id} deleteHandler={this.deleteCookbookHandler} cookbook={cb} owned={true}/>);
 		}
     };
     
@@ -34,31 +35,42 @@ class CookBookContainer extends React.Component {
             }
         })
 		if (userLikedCookbooks.length > 0) {
-			return userLikedCookbooks.map((cb) => <CookbookCard cookbook={cb} followed={true} />);
+			return userLikedCookbooks.map((cb) => <CookbookCard cookbook={cb} key={cb.id} followed={true} />);
 		}
 	};
 
 	renderAllCookbooks = () => {
 		if (this.state.allCookbooks.length > 0) {
-			let cookbooks = this.state.allCookbooks.map((cb) => <CookbookCard cookbook={cb} />);
+			let cookbooks = this.state.allCookbooks.map((cb) => <CookbookCard key={cb.id} cookbook={cb} />);
             return <CardGroup>{cookbooks}</CardGroup>;
             
 		}
 	};
 
 	componentDidMount = () => {
-		fetch(cookbooksURL).then((resp) => resp.json()).then((cookbooks) => {
+        fetch(cookbooksURL, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${window.sessionStorage.accessToken}`
+            }
+        })
+        .then((resp) => resp.json())
+        .then((cookbooks) => {
 			this.setState({ allCookbooks: cookbooks });
 		});
     };
     
     handleNewCookbookChange = e => {
-        this.setState({newCookbookTitle: e.target.value})
+        this.setState({
+            [e.target.name]: e.target.value})
     }
 
     deleteCookbookHandler = cookbookId => {
         const options = {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${window.sessionStorage.accessToken}`
+            }
         }
 
         fetch(cookbooksURL + cookbookId, options)
@@ -77,13 +89,15 @@ class CookBookContainer extends React.Component {
         this.setState({newCookbookTitle: ""})
         const newCookbook = {
             title: this.state.newCookbookTitle,
-            user_id: this.props.user.id
+            user_id: this.props.user.id,
+            description: this.state.newCookbookDescription
         }
         const options = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Accepts": "application/json"
+                "Accepts": "application/json",
+                Authorization: `Bearer ${window.sessionStorage.accessToken}`
             },
             body: JSON.stringify(newCookbook)
         }
@@ -108,7 +122,7 @@ class CookBookContainer extends React.Component {
 		return (
 			<Switch>
                 {/* new cookbook */}
-                <Route path="/cookbooks/new" render={() => <NewCookbookForm title={this.state.newCookbookTitle}changeHandler={this.handleNewCookbookChange} submitHandler={this.submitNewForm}/>} />
+                <Route path="/cookbooks/new" render={() => <NewCookbookForm description={this.state.newCookbookDescription}title={this.state.newCookbookTitle} changeHandler={this.handleNewCookbookChange} submitHandler={this.submitNewForm}/>} />
 
                 {/* individual cookbook show page */}
 				<Route path="/cookbooks/:user_id/:cookbook_id" render={({match}) => {

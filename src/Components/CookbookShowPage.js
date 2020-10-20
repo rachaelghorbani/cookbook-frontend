@@ -7,7 +7,7 @@ import SearchRecipesFromCookbook from '../Components/SearchRecipesFromCookbook'
 
 const CookbookShowPage = (props) => {
 	const renderRecipes = () => {
-		const recipes = props.cookbook.recipes.map((recipe) => <RecipeCard recipe={recipe} />);
+		const recipes = props.cookbook.recipes.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />);
 		return <CardGroup>{recipes}</CardGroup>;
 	};
 	const getTitleImage = () => {
