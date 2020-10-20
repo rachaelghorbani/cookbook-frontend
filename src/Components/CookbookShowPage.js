@@ -37,8 +37,8 @@ const CookbookShowPage = (props) => {
 				</Col>
 			</Row>
 			<Row>
-				<Col className=" d-flex justify-content-between align-items-center m-2">
-					Recipes in this cookbook
+				<Col className="d-flex justify-content-between align-items-center m-2">
+					Recipes found in this cookbook
                     <SearchRecipesFromCookbook />
 					{/* <div className="md-form mt-0 w-50 ">
 						<input className="form-control" type="text" placeholder="Search" aria-label="Search" />
