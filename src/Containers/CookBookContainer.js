@@ -8,9 +8,8 @@ import CookbookShowPage from '../Components/CookbookShowPage'
 import RecipeContainer from './RecipeContainer'
 import RecipeShowPage from '../Components/RecipeShowPage'
 
-// /cookbook-frontend/src/Containers/RecipeContainer.js
-
 const cookbooksURL = 'http://localhost:3000/cookbooks/';
+const commentsURL = 'http://localhost:3000/comments/';
 
 class CookBookContainer extends React.Component {
 	state = {
@@ -20,10 +19,8 @@ class CookBookContainer extends React.Component {
     };
     
     getRecipe = (recipe_id) => {
-            console.log(this.state.allCookbooks)
             let foundCb = this.state.allCookbooks.find(cb => cb.recipes.find(r => r.id === recipe_id))
             let foundRecipe = foundCb.recipes.find(r => r.id === recipe_id)
-            console.log(foundRecipe)
             return foundRecipe
     }
 
@@ -97,6 +94,7 @@ class CookBookContainer extends React.Component {
             //find old item from api then filter tho
         })
     }
+    
     submitNewForm = e => {
         e.preventDefault()
         this.setState({newCookbookTitle: ""})
@@ -130,8 +128,46 @@ class CookBookContainer extends React.Component {
         // this.props.windowProps.history.push('/cookbooks')
     }
 
+    addCommentClickHandler = commentObj => {
+        if(commentObj.content !== ''){
+        const options ={
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accepts": "application/json",
+                Authorization: `Bearer ${window.sessionStorage.accessToken}`
+            },
+            body: JSON.stringify(commentObj)
+        }
+
+        fetch(commentsURL, options)
+        .then(resp => resp.json())
+        .then(newComment => {
+            let newArr = [...this.state.allCookbooks]
+            let recipe_id = newComment.recipe_id
+            let foundCb = newArr.find(cb => cb.recipes.find(r => r.id === recipe_id))
+            let foundCb_id = foundCb.id
+            fetch(cookbooksURL+foundCb_id, {method: "GET", headers: {Authorization: `Bearer ${window.sessionStorage.accessToken}`}})
+            .then(resp => resp.json())
+            .then(newCB => {
+                let oldCbIndex = newArr.findIndex(cb => cb.id === newCB.id)
+                newArr.splice(oldCbIndex, 1, newCB)
+                this.setState({allCookbooks: newArr})
+            })
+        })
+    }
+    }
+
+    submitNewPhoto = formData => {
+        fetch('http://localhost:3000/photos', {
+            method: "POST",
+            body: formData
+        }).then(resp => resp.json())
+        .then(img => {
+            console.log(img)
+        })
+    }
 	render() {
-console.log(this.state.allCookbooks)
 		return (
 			<Switch>
                 {/* new cookbook */}
@@ -149,7 +185,7 @@ console.log(this.state.allCookbooks)
                         return (
 
 
-                            <RecipeShowPage recipe={recipe}/>
+                            <RecipeShowPage addPhoto={this.submitNewPhoto}clickHandler={this.addCommentClickHandler} user_id={this.props.user.id}recipe={recipe}/>
                         )
                     }
             }} />

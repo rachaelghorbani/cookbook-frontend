@@ -8,7 +8,6 @@ const RecipeCard = (props) => {
 			return props.recipe.photos[0].img_url;
 		}
 	};
-console.log(props)
 	return (
         <div className="recipe-card">
 		<Card style={{ width: '18rem', margin: '5px' }}>

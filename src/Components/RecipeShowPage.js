@@ -2,43 +2,15 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, CardGroup, Carousel, Image, ListGroup } from 'react-bootstrap';
 import '../App.css';
-import SearchRecipesFromCookbook from './SearchRecipesFromCookbook';
+// import SearchRecipesFromCookbook from './SearchRecipesFromCookbook';
+import CommentsContainer from '../Containers/CommentsContainer'
+import ImageUploadForm from './ImageUploadForm'
 
 class RecipeShowPage extends React.Component {
 	state = {
 		searchParam: 'title',
 		searchTerm: ''
 	};
-	//  renderRecipes = () => {
-	//      if(this.state.searchParam === "title"){
-	//          const filtered = this.props.cookbook.recipes.filter(recipe => recipe.title.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
-	//          const recipes = filtered.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />);
-	// 	    return <CardGroup>{recipes}</CardGroup>;
-
-	//      }else if (this.state.searchParam === "ingredient"){
-	//          const filtered = this.props.cookbook.recipes.filter(recipe => {
-	//            for(let ingredient of recipe.ingredients){
-	//                  if(ingredient.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())){
-	//                      return recipe
-	//                  }
-	//              }
-	//          })
-	//          const recipes = filtered.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />);
-	//          return <CardGroup>{recipes}</CardGroup>;
-
-	//      }
-	// const recipes = this.props.cookbook.recipes.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />);
-	// return <CardGroup>{recipes}</CardGroup>;
-	// };
-
-	// getTitleImage = () => {
-	// 	let photoRecipe = this.props.recipe.find((rec) => rec.photos.length > 0);
-	// 	if (photoRecipe) {
-	// 		return photoRecipe.photos[0].img_url;
-	// 	} else {
-	// 		return 'https://images2.minutemediacdn.com/image/upload/c_crop,h_1126,w_2000,x_0,y_181/f_auto,q_auto,w_1100/v1554932288/shape/mentalfloss/12531-istock-637790866.jpg';
-	// 	}
-	// };
 
 	getImages = () => {
 		return this.props.recipe.photos.map((photo, index) => {
@@ -64,11 +36,8 @@ class RecipeShowPage extends React.Component {
         }
         )
     }
-    
 
-	// "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=700%2C636"
-
-    // dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(thisIsMyCopy)}}
+  
 
 	render() {
 		return (
@@ -76,8 +45,9 @@ class RecipeShowPage extends React.Component {
 				<Row>
 					<Col className="border border-danger">
 						<Carousel>{this.getImages()}</Carousel>
-                        //comments
-						{/* <img className="img-responsive w-100" src={this.getTitleImage()} alt="food pic" /> */}
+                        <ImageUploadForm recipe_id={this.props.recipe.id}addPhoto={this.props.addPhoto}/>
+                        <h4>Comments:</h4>
+                        <CommentsContainer clickHandler={this.props.clickHandler}user_id={this.props.user_id} comments={this.props.recipe.comments} recipe_id={this.props.recipe.id}/>
 					</Col>
 					<Col className="border border-danger">
 						<Row>
@@ -85,7 +55,7 @@ class RecipeShowPage extends React.Component {
 								{this.props.recipe.title}
 							</Col>
 							<Col lg={12} className="  border border-primary mt-3">
-                                <ListGroup as="ul" variant="flush">
+                                <ListGroup as="ul" variant="flush" className="overflow-auto" style={{height: 400}}>
                                     <h4>Ingredients:</h4>
                                     {this.getIngredients()}
                                 </ListGroup>
@@ -97,13 +67,6 @@ class RecipeShowPage extends React.Component {
 						</Row>
 					</Col>
 				</Row>
-                <Row>
-                    <Col className="border border-danger">
-                        <div>
-                            hi
-                        </div>
-                    </Col>
-                </Row>
 			
 			</Container>
 		);
