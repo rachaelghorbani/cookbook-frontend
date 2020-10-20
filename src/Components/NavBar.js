@@ -8,7 +8,7 @@ class NavBar extends React.Component {
     
 	render() {
 		return (
-			<div className="navbar p-0">
+			<div className="navbar p-0 d-flex">
 				<Navbar className="w-100 m-0" bg="light" expand="lg">
 					<Navbar.Brand href="#home">Cookbooks!</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -17,7 +17,7 @@ class NavBar extends React.Component {
                     
            
 
-						<Nav className="mr-auto">
+						<Nav className="ml-auto">
                             {this.props.user.username}
 							<Nav.Link ><Link to="/cookbooks">All Cookbooks</Link></Nav.Link>
                             <Nav.Link ><Link to={`/cookbooks/${this.props.user.id}`}>My Cookbooks</Link></Nav.Link>
