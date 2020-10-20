@@ -37,7 +37,7 @@ const CookbookShowPage = (props) => {
 				</Col>
 			</Row>
 			<Row>
-				<Col className="recipe-title d-flex justify-content-between align-items-center col">
+				<Col className=" d-flex justify-content-between align-items-center m-2">
 					Recipes in this cookbook
                     <SearchRecipesFromCookbook />
 					{/* <div className="md-form mt-0 w-50 ">
