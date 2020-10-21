@@ -14,7 +14,7 @@ class RecipeContainer extends React.Component {
 
     render() {
         return (
-            <CardGroup>{this.renderRecipes()}</CardGroup>
+            <CardGroup className="d-flex justify-content-center">{this.renderRecipes()}</CardGroup>
         )
     }
 

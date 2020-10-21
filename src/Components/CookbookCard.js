@@ -27,19 +27,19 @@ class CookbookCard extends React.Component {
 			return (
 				<div>
 					<Link to={`/cookbooks/${this.props.cookbook.owner.owner_id}/${this.props.cookbook.id}`}>
-						<Button variant="primary">See More</Button>
+						<Button className='mx-1'variant="primary">See More</Button>
 					</Link>
-					<Button>Edit</Button>
-					<Button onClick={this.localDeleteHandler}>Delete</Button>
+					<Button className='mx-1' >Edit</Button>
+					<Button className='mx-1' onClick={this.localDeleteHandler}>Delete</Button>
 				</div>
 			);
 		} else if (this.props.followed) {
 			return (
 				<div>
 					<Link to={`/cookbooks/${this.props.cookbook.owner.owner_id}/${this.props.cookbook.id}`}>
-						<Button variant="primary">See More</Button>
+						<Button className='mx-1' variant="primary">See More</Button>
 					</Link>
-                    <Button variant="danger">Unfollow</Button>
+                    <Button className='mx-1' variant="danger">Unfollow</Button>
 				</div>
 			);
 		}
@@ -49,7 +49,7 @@ class CookbookCard extends React.Component {
 	render() {
 		return (
 			<div className="cookbook-card">
-				<Card style={{ width: '18rem', margin: '5px'}}>
+				<Card style={{ width: '18rem', height: '25rem',margin: '5px'}}>
 					<Card.Img className="card-image" variant="top" src={this.getTitleImage()} alt="You Should See Food Here." />
 					<Card.Body>
 						<Card.Title>{this.props.cookbook.title}</Card.Title>

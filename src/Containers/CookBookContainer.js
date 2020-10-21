@@ -246,12 +246,12 @@ class CookBookContainer extends React.Component {
 					path="/cookbooks/:user_id"
 					render={() => {
 						return (
-							<Container className="d-flex justify-content-center">
+							<div className="d-flex justify-content-center">
 								<CardGroup >
 									{this.renderOwnedCookbooks()}
 									{this.renderFollowedCookbooks()}
 								</CardGroup>
-							</Container>
+							</div>
 						);
 					}}
 				/>
@@ -260,7 +260,7 @@ class CookBookContainer extends React.Component {
 				<Route
 					path="/cookbooks"
 					render={() => {
-						return <Container className="d-flex">{this.renderAllCookbooks()}</Container>;
+						return <div className="d-flex justify-content-center">{this.renderAllCookbooks()}</div>;
 					}}
 				/>
 			</Switch>
