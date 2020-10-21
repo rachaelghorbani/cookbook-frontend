@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Container} from 'react-bootstrap';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import NavBar from './Components/NavBar';
 import Header from './Components/Header';
 import WelcomeContainer from './Containers/WelcomeContainer';
@@ -17,6 +16,7 @@ class App extends React.Component {
 	};
 
     componentDidMount = () => {
+        
 		if (window.sessionStorage.accessToken) {
 			fetch('http://localhost:3000/', {
 				method: 'GET',
@@ -51,6 +51,8 @@ class App extends React.Component {
             window.sessionStorage.accessToken = data.jwt
             this.setState({
                 currentUser: data.user
+                // this.props.windowProps.history.push(redirectUrl);
+
             });
         });
 	};
@@ -99,4 +101,4 @@ class App extends React.Component {
 	}
 }
 
-export default App;
+export default withRouter(App);
