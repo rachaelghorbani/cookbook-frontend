@@ -15,7 +15,7 @@ class CookbookShowPage extends React.Component {
          if(this.state.searchParam === "title"){
              const filtered = this.props.cookbook.recipes.filter(recipe => recipe.title.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
              const recipes = filtered.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />);
-		    return <CardGroup>{recipes}</CardGroup>;
+		    return <CardGroup className='justify-content-center'>{recipes}</CardGroup>;
 
          }else if (this.state.searchParam === "ingredient"){
              const filtered = this.props.cookbook.recipes.filter(recipe => {
@@ -26,7 +26,7 @@ class CookbookShowPage extends React.Component {
                  }
              })
              const recipes = filtered.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />);
-             return <CardGroup>{recipes}</CardGroup>;
+             return <CardGroup className='justify-content-center'>{recipes}</CardGroup>;
             
          }
 		// const recipes = this.props.cookbook.recipes.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />);
@@ -68,7 +68,7 @@ class CookbookShowPage extends React.Component {
                     <SearchRecipesFromCookbook searchParam={this.state.searchParam} searchTerm={this.state.searchTerm} changeHandler={this.searchHandler}/>
 				</Col>
 			</Row>
-			<Row className="mt-6">
+			<Row className="mt-6 d-flex">
 				<Col className="">{this.renderRecipes()}</Col>
 			</Row>
 		</Container>

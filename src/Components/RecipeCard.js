@@ -10,7 +10,7 @@ const RecipeCard = (props) => {
 	};
 	return (
         <div className="recipe-card">
-		<Card style={{ width: '18rem', margin: '5px' }}>
+		<Card style={{ width: '18rem', height: '25rem', margin: '5px' }}>
 			<Card.Img variant="top" src={showPhoto()} alt="You Should See Food Here." />
 			<Card.Body>
 				<Card.Title>{props.recipe.title}</Card.Title>
