@@ -48,7 +48,7 @@ class CookbookShowPage extends React.Component {
 	 renderRecipes = () => {
          if(this.state.searchParam === "title"){
              const filtered = this.props.cookbook.recipes.filter(recipe => recipe.title.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
-             const recipes = filtered.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />);
+             const recipes = filtered.map((recipe) => <RecipeCard key={recipe.id} owner_id={this.props.cookbook.owner.owner_id} cookbook_id={this.props.cookbook.id}recipe={recipe} />);
 		    return <CardGroup className='justify-content-center'>{recipes}</CardGroup>;
 
          }else if (this.state.searchParam === "ingredient"){
@@ -59,7 +59,7 @@ class CookbookShowPage extends React.Component {
                      }
                  }
              })
-             const recipes = filtered.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />);
+             const recipes = filtered.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} owner_id={this.props.cookbook.owner.owner_id} cookbook_id={this.props.cookbook.id}/>);
              return <CardGroup className='justify-content-center'>{recipes}</CardGroup>;
             
          }
@@ -77,6 +77,7 @@ class CookbookShowPage extends React.Component {
         this.setState({[e.target.name]: e.target.value})
     }
     render(){
+        console.log(this.props.cookbook)
 	return (
 		<Container className="mt-2">
 			<Row>
