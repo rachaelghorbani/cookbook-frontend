@@ -25,12 +25,17 @@ class ImageUploadForm extends React.Component{
 
     localSubmitHandler = (e) => {
         e.preventDefault()
+        
         const form = new FormData()
         form.append("image", this.state.image)
         form.append("recipe_id", this.props.recipe_id)
         form.append("description", this.state.description)
         this.props.addPhoto(form)
-        this.setState({image: {}})
+        e.target.image.value = null
+        this.setState({
+            image: {},
+            description: ""
+        })
     }
 
 

@@ -158,6 +158,7 @@ class CookBookContainer extends React.Component {
     }
     }
 
+
     submitNewPhoto = formData => {
         fetch('http://localhost:3000/photos', {
             method: "POST",
@@ -167,11 +168,26 @@ class CookBookContainer extends React.Component {
             body: formData
         }).then(resp => resp.json())
         .then(img => {
-            //
             console.log(img)
+            const newArr = [...this.state.allCookbooks]
+            const recipe_id = img.recipe_id
+            const foundCb = newArr.find(cb => cb.recipes.find(r => r.id === recipe_id))
+            const foundCb_id = foundCb.id
+            fetch(cookbooksURL+foundCb_id, {method: "GET", headers: {Authorization: `Bearer ${window.sessionStorage.accessToken}`}})
+            .then(resp => resp.json())
+            .then(newCB => {
+                let oldCbIndex = newArr.findIndex(cb => cb.id === newCB.id)
+                newArr.splice(oldCbIndex, 1, newCB)
+                this.setState({allCookbooks: newArr})
+            })
+
+
+
+
+
         })
     }
-    test
+    
 	render() {
 		return (
 			<Switch>
