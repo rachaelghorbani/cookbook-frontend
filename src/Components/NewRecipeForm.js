@@ -121,7 +121,7 @@ class NewRecipeForm extends React.Component {
 	render() {
 		console.log(this.state);
 		return (
-			<Form onSubmit={this.localSubmitHandler}>
+			<Form className="login-overlay"onSubmit={this.localSubmitHandler}>
 				<Form.Group controlId="title">
 					<Form.Label>Recipe Title:</Form.Label>
 					<Form.Control

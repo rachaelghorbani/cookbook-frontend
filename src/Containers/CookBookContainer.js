@@ -8,6 +8,7 @@ import CookbookShowPage from '../Components/CookbookShowPage';
 import RecipeContainer from './RecipeContainer';
 import RecipeShowPage from '../Components/RecipeShowPage';
 import NewRecipeForm from '../Components/NewRecipeForm'
+import '../App.css'
 
 const cookbooksURL = 'http://localhost:3000/cookbooks/';
 const commentsURL = 'http://localhost:3000/comments/';
@@ -283,18 +284,20 @@ class CookBookContainer extends React.Component {
 				<Route
 					path="/cookbooks/new"
 					render={() => (
+                        <div className=" welcome-background d-flex justify-content-center align-items-center m-0 p-0" style={{height: "75vh"}}>
 						<NewCookbookForm
 							description={this.state.newCookbookDescription}
 							title={this.state.newCookbookTitle}
 							changeHandler={this.handleNewCookbookChange}
 							submitHandler={this.submitNewForm}
 						/>
+                        </div>
 					)}
 				/>
                 {/* new recipe */}
                 <Route path="/cookbooks/recipes/new" render={() => {
                    return (
-                    <div className=" d-flex justify-content-center align-items-center m-0 p-0" style={{height: "75vh"}}>
+                    <div className=" welcome-background  d-flex justify-content-center align-items-center m-0 p-0" style={{height: "75vh"}}>
                    <NewRecipeForm cookbooks={this.state.allCookbooks} user={this.props.user} addRecipe={this.addRecipe}/>
                    </div>
                    )
@@ -346,7 +349,7 @@ class CookBookContainer extends React.Component {
 					render={() => {
 						return (
 							<div className="d-flex justify-content-center">
-								<CardGroup >
+								<CardGroup className="justify-content-center">
 									{this.renderOwnedCookbooks()}
 									{this.renderFollowedCookbooks()}
 								</CardGroup>

@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 
 const NewCookbookForm = (props) => {
 	return (
-		<Form onSubmit={props.submitHandler} className="w-25 ml-4">
+		<Form onSubmit={props.submitHandler} className=" login-overlay w-25 ml-4">
 			<Form.Group controlId="formBasicTitle">
 				<Form.Label>Title:</Form.Label>
 				<Form.Control
