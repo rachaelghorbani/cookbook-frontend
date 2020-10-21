@@ -49,7 +49,7 @@ class CookbookCard extends React.Component {
 	render() {
 		return (
 			<div className="cookbook-card">
-				<Card style={{ width: '18rem' }}>
+				<Card style={{ width: '18rem', margin: '5px'}}>
 					<Card.Img className="card-image" variant="top" src={this.getTitleImage()} alt="You Should See Food Here." />
 					<Card.Body>
 						<Card.Title>{this.props.cookbook.title}</Card.Title>
