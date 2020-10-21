@@ -1,57 +1,69 @@
 @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
 
 .App {
-  text-align: center;
+	text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+	height: 40vmin;
+	pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+	.App-logo {
+		animation: App-logo-spin infinite 20s linear;
+	}
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+	background-color: #282c34;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
 }
 
 .App-link {
-  color: #61dafb;
+	color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 
-.recipe-title{
-    font-family: 'Sacramento', cursive;
-    font-size: 50px;
+.recipe-title {
+	font-family: 'Sacramento', cursive;
+	font-size: 50px;
 }
-.card-image{
-    height: 200px;
+.card-image {
+	height: 200px;
 }
-.jumbo{
-    background: url(assets/lily-banse--YHSwy6uqvk-unsplashCropped.jpg);
-    background-size: cover;
-    height: 200px;
-    position: relative;
-  
-    /* z-index: 12 */
+.jumbo {
+	background: url(assets/lily-banse--YHSwy6uqvk-unsplashCropped.jpg);
+	background-size: cover;
+	height: 200px;
+	position: relative;
 
+	/* z-index: 12 */
 }
+
+.welcome-background {
+	background: url(assets/homepage.jpg);
+	background-size: cover;
+	opacity: 0.3;
+	position: relative;
+	z-index: 1;
+}
+.login-overlay {
+	position: absolute;
+	z-index: -1;
+}
+

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import Button from 'react-bootstrap/Button';
+import {Container} from 'react-bootstrap';
 import { Route, Switch } from 'react-router-dom';
 import NavBar from './Components/NavBar';
 import Header from './Components/Header';
@@ -86,7 +86,9 @@ class App extends React.Component {
 			return (
 				<div>
 					<Header />
-					<WelcomeContainer login={this.loginUser} />
+                    <div className="welcome-background d-flex justify-content-center align-items-center m-0 p-0" style={{height: "75vh"}}>
+					<WelcomeContainer className="login-overlay"login={this.loginUser} />
+                    </div>
 				</div>
 			);
 		}
