@@ -43,24 +43,24 @@ class RecipeShowPage extends React.Component {
 		return (
 			<Container className="mt-2 mb-4">
 				<Row>
-					<Col className="border border-danger">
+					<Col >
 						<Carousel>{this.getImages()}</Carousel>
                         <ImageUploadForm recipe_id={this.props.recipe.id}addPhoto={this.props.addPhoto}/>
                         <h4>Comments:</h4>
                         <CommentsContainer clickHandler={this.props.clickHandler}user_id={this.props.user_id} comments={this.props.recipe.comments} recipe_id={this.props.recipe.id}/>
 					</Col>
-					<Col className="border border-danger">
+					<Col >
 						<Row>
-							<Col lg={12} className="border border-primary  text-center recipe-title">
+							<Col lg={12} className="border-bottom  text-center recipe-title">
 								{this.props.recipe.title}
 							</Col>
-							<Col lg={12} className="  border border-primary mt-3">
+							<Col lg={12} className="  mt-3">
                                 <ListGroup as="ul" variant="flush" className="overflow-auto" style={{height: 400}}>
                                     <h4>Ingredients:</h4>
                                     {this.getIngredients()}
                                 </ListGroup>
 							</Col>
-                            <Col lg={12} className="border border-primary mt-3 ">
+                            <Col lg={12} className=" mt-3 ">
                                 <h4>Instructions:</h4>
                                 <div className="instructions" dangerouslySetInnerHTML={{__html: (this.props.recipe.instructions)}}></div>
 							</Col>
