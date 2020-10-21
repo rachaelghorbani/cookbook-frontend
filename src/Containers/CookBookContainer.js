@@ -161,9 +161,13 @@ class CookBookContainer extends React.Component {
     submitNewPhoto = formData => {
         fetch('http://localhost:3000/photos', {
             method: "POST",
+            headers:{
+                Authorization: `Bearer ${window.sessionStorage.accessToken}`
+            },
             body: formData
         }).then(resp => resp.json())
         .then(img => {
+            //
             console.log(img)
         })
     }
