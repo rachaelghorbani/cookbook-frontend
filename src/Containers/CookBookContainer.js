@@ -171,6 +171,7 @@ class CookBookContainer extends React.Component {
             console.log(img)
         })
     }
+    test
 	render() {
 		return (
 			<Switch>
