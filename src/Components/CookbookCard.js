@@ -12,38 +12,31 @@ class CookbookCard extends React.Component {
 			return 'https://images2.minutemediacdn.com/image/upload/c_crop,h_1126,w_2000,x_0,y_181/f_auto,q_auto,w_1100/v1554932288/shape/mentalfloss/12531-istock-637790866.jpg';
 		}
 	};
+	
 
-	// followedButton = () => {
-	// 	if (this.props.followed) {
-	// 		return <Button variant="danger">Unfollow</Button>;
+
+	// buttonsToRender = () => {
+    //     if (this.props.owned) {
+	// 		return (
+	// 			<div>
+	// 				<Link to={`/cookbooks/${this.props.cookbook.owner.owner_id}/${this.props.cookbook.id}`}>
+	// 					<Button className='mx-1'variant="primary">See More</Button>
+	// 				</Link>
+	// 				<Button className='mx-1' >Edit</Button>
+	// 				<Button className='mx-1' onClick={this.localDeleteHandler}>Delete</Button>
+	// 			</div>
+	// 		);
+	// 	} else if (this.props.followed) {
+	// 		return (
+	// 			<div>
+	// 				<Link to={`/cookbooks/${this.props.cookbook.owner.owner_id}/${this.props.cookbook.id}`}>
+	// 					<Button className='mx-1' variant="primary">See More</Button>
+	// 				</Link>
+    //                 <Button className='mx-1' variant="danger">Unfollow</Button>
+	// 			</div>
+	// 		);
 	// 	}
-    // };
-    localDeleteHandler = () => {
-        this.props.deleteHandler(this.props.cookbook.id)
-    }
-
-	buttonsToRender = () => {
-		if (this.props.owned) {
-			return (
-				<div>
-					<Link to={`/cookbooks/${this.props.cookbook.owner.owner_id}/${this.props.cookbook.id}`}>
-						<Button className='mx-1'variant="primary">See More</Button>
-					</Link>
-					<Button className='mx-1' >Edit</Button>
-					<Button className='mx-1' onClick={this.localDeleteHandler}>Delete</Button>
-				</div>
-			);
-		} else if (this.props.followed) {
-			return (
-				<div>
-					<Link to={`/cookbooks/${this.props.cookbook.owner.owner_id}/${this.props.cookbook.id}`}>
-						<Button className='mx-1' variant="primary">See More</Button>
-					</Link>
-                    <Button className='mx-1' variant="danger">Unfollow</Button>
-				</div>
-			);
-		}
-	};
+	// };
 	//if this.props.owned add edit and delete buttons, otherwise add the follow button
 
 	render() {
@@ -54,10 +47,13 @@ class CookbookCard extends React.Component {
 					<Card.Body>
 						<Card.Title>{this.props.cookbook.title}</Card.Title>
 						<Card.Text>Cookbook description to go here!</Card.Text>
+                        <Link to={`/cookbooks/${this.props.cookbook.owner.owner_id}/${this.props.cookbook.id}`}>
+							<Button className='mx-1'variant="primary">See More</Button>
+						</Link>
 						{/* <Link to={`/cookbooks/${this.props.cookbook.owner_id}/${this.props.cookbook.id}`}>
 							<Button variant="primary">See More</Button>
 						</Link> */}
-                        {this.buttonsToRender()}
+                        {/* {this.buttonsToRender()} */}
 						{/* {this.followedButton()} */}
 					</Card.Body>
 				</Card>

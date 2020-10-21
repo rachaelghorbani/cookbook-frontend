@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import NavBar from './Components/NavBar';
 import Header from './Components/Header';
 import WelcomeContainer from './Containers/WelcomeContainer';
@@ -9,10 +9,12 @@ import CookBookContainer from './Containers/CookBookContainer';
 import Home from './Components/Home';
 
 const loginURL = 'http://localhost:3000/login'
+
 class App extends React.Component {
 
 	state = {
-		currentUser: {}
+		currentUser: {},
+		loginCount: 0
 	};
 
     componentDidMount = () => {
@@ -48,16 +50,23 @@ class App extends React.Component {
             body: JSON.stringify({ username: username, password: password})
         };
         fetch(loginURL, options).then((resp) => resp.json()).then((data) => {
-            window.sessionStorage.accessToken = data.jwt
-            this.setState({
-                currentUser: data.user
-                // this.props.windowProps.history.push(redirectUrl);
+            console.log(data)
+			if (data.user) {
+				window.sessionStorage.accessToken = data.jwt
+				this.setState({
+					currentUser: data.user
+				})
+			} else {
 
-            });
-        });
-	};
-	
-
+				let newLoginCount = this.state.loginCount + 1
+				this.setState(prevState => {
+					return ({
+						loginCount: newLoginCount
+					})
+				})
+			}
+		})
+	}
 
 	componentsToRender = () => {
 
@@ -79,9 +88,11 @@ class App extends React.Component {
 								/>
 							)}
 						/>
-						<Route path="/" render={() => <Home user={this.state.currentUser} />} />
+						<Route path="/"> 
+							<Redirect to={`/cookbooks/${this.state.currentUser.id}`} />
+						</Route>
+						
 					</Switch>
-					{/* <Route path={`/user/${this.state.currentUser.id}/cookbooks`} render={(windowProps) => <CookBookContainer windowProps={windowProps}owned={this.state.currentUser.owned_cookbooks} followed={this.state.currentUser.followed_cookbooks} /> } /> */}
 				</div>
 			);
 		} else {

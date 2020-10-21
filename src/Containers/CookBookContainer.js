@@ -30,12 +30,17 @@ class CookBookContainer extends React.Component {
             },
             body: JSON.stringify(formData)
         }
-		console.log(formData)
 		fetch(recipesURL, options)
 		.then(resp => resp.json())
 		.then(recipe => {
-			// Find cookbook and update state
-			console.log(recipe)
+            const redirectUrl = `/cookbooks/${this.props.user.id}/${recipe.cookbook_id}/${recipe.id}/`
+            let newArr = [...this.state.allCookbooks]
+			let cb = newArr.find(cookbook => cookbook.id === recipe.cookbook_id)
+			cb.recipes.push(recipe)
+			let index = newArr.indexOf(cb)
+			newArr.splice(index, 1, cb)
+            this.setState({allCookbooks: newArr})
+            this.props.windowProps.history.push(redirectUrl);
 		})
 	}
 
@@ -50,6 +55,18 @@ class CookBookContainer extends React.Component {
 			return cb.id === cookbook_id;
 		});
 	};
+
+	getUserCookbooks = () => {
+		return this.state.allCookbooks.filter((cb) => cb.owner.owner_id === this.props.user.id)
+	}
+
+	getUserFollowedCookbooks = () => {
+		return this.state.allCookbooks.filter((cookbook) => {
+			for (let follower of cookbook.followers) {
+				return follower.follower_id === this.props.user.id;
+			}
+		});
+	}
 
 	renderOwnedCookbooks = () => {
 		const userOwnedCookbooks = this.state.allCookbooks.filter((cb) => cb.owner.owner_id === this.props.user.id);
@@ -73,7 +90,7 @@ class CookBookContainer extends React.Component {
 
 	renderAllCookbooks = () => {
 		if (this.state.allCookbooks.length > 0) {
-			let cookbooks = this.state.allCookbooks.map((cb) => <CookbookCard key={cb.id} cookbook={cb} />);
+			let cookbooks = this.state.allCookbooks.map((cb) => <CookbookCard key={cb.id} cookbook={cb} user={this.props.user} all="all"/>);
 			return <CardGroup className="justify-content-center">{cookbooks}</CardGroup>;
 		}
 	};
@@ -111,11 +128,10 @@ class CookBookContainer extends React.Component {
 			})
 			.then(() => {
 				const newArr = [ ...this.state.allCookbooks ];
-
-				const filtered = newArr.filter((cb) => cb.id !== cookbookId);
-				this.setState({ allCookbooks: filtered });
-				//not deleting it from the users own cookbooks
-				//find old item from api then filter tho
+                const filtered = newArr.filter((cb) => cb.id !== cookbookId);
+                const redirectUrl = `/cookbooks/${this.props.user.id}/`
+                this.props.windowProps.history.push(redirectUrl);
+                this.setState({ allCookbooks: filtered });
 			});
 	};
 
@@ -206,7 +222,59 @@ class CookBookContainer extends React.Component {
 						this.setState({ allCookbooks: newArr });
 					});
 			});
-	};
+    };
+    
+    followHandler = cookbookId => {
+        const options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+					Accepts: 'application/json',
+					Authorization: `Bearer ${window.sessionStorage.accessToken}`
+            },
+            body: JSON.stringify({cookbook_id: cookbookId, user_id: this.props.user.id})
+        }
+
+        fetch('http://localhost:3000/followeds', options)
+        .then(resp => resp.json())
+        .then(updatedCookbook => {
+			let newArr = [...this.state.allCookbooks]
+            let cb = newArr.find(cookbook => cookbook.id === updatedCookbook.id)
+			console.log("old: ", cb)
+			console.log("updated: ", updatedCookbook)
+			let index = newArr.indexOf(cb)
+			newArr.splice(index, 1, updatedCookbook)
+			this.setState({allCookbooks: newArr})
+        })
+	}
+
+    unfollowHandler = cookbookId => {
+		const followers = this.getCookbook(cookbookId).followers
+		let followed = followers.find(f => f.follower_id === this.props.user.id)
+		console.log(followed)
+		let followedId = followed.followed_id
+        
+		const options = {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+					Accepts: 'application/json',
+					Authorization: `Bearer ${window.sessionStorage.accessToken}`
+            }
+        }
+
+        fetch(`http://localhost:3000/followeds/${followedId}`, options)
+        .then(resp => resp.json())
+        .then(updatedCookbook => {
+			let newArr = [...this.state.allCookbooks]
+			let cb = newArr.find(cookbook => cookbook.id === updatedCookbook.id)
+			console.log("old: ", cb)
+			console.log("updated: ", updatedCookbook)
+			let index = newArr.indexOf(cb)
+			newArr.splice(index, 1, updatedCookbook)
+			this.setState({allCookbooks: newArr})
+        })
+	}
 
 	render() {
 		return (
@@ -264,8 +332,10 @@ class CookBookContainer extends React.Component {
 					path="/cookbooks/:user_id/:cookbook_id"
 					render={({ match }) => {
 						const id = parseInt(match.params.cookbook_id);
+						let ownedCookbooks = this.getUserCookbooks()
+						let followedCookbooks = this.getUserFollowedCookbooks()
 						if (this.state.allCookbooks.length > 0) {
-							return <CookbookShowPage cookbook={this.getCookbook(id)} />;
+							return <CookbookShowPage user={this.props.user} cookbook={this.getCookbook(id)} ownedCookbooks={ownedCookbooks} followHandler={this.followHandler} unfollowHandler={this.unfollowHandler} followedCookbooks={followedCookbooks} delete={this.deleteCookbookHandler} unfollow={this.unfollowHandler} follow={this.followHandler}/>;
 						}
 					}}
 				/>

@@ -17,8 +17,10 @@ class LoginForm extends React.Component {
     }
 
     submitHandler = (e) => {
-        e.preventDefault()
-        this.props.login(this.state)
+		e.preventDefault()
+		this.props.reset()
+		this.props.login(this.state)
+		// this.setState({username: "", password: ""})
     }
 
 	render() {

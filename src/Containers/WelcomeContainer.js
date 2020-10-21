@@ -15,26 +15,33 @@ class WelcomeContainer extends React.Component {
     loginHandler = () => {
         this.setState({showButtons: false, showLogin: true})
         
-        //show login form and hide buttons
     }
 
     signupHandler = () => {
         this.setState({showButtons: false, showSignup: true})
        
     }
+
+    reset = () => {
+        this.setState({
+            showButtons: true,
+            showLogin: false,
+            showSignup: false})
+    }
     
 	render() {
+        console.log("Show Login?", this.state.showLogin)
 		return (
 			<div className="welcome-container login-overlay">
                 {this.state.showButtons ? <div style={{opacity: 1}}>
-                    <Button className="mx-2"onClick={this.loginHandler}variant="secondary">Login</Button>
-                    <Button className="mx-2" onClick={this.signupHandler}variant="secondary">Sign Up</Button>
+                    <Button className="mx-2"onClick={this.loginHandler} variant="secondary">Login</Button>
+                    <Button className="mx-2" onClick={this.signupHandler} variant="secondary">Sign Up</Button>
                 </div> : null}
             {/* {this.loginHandler}
             {this.signupHandler} */}
                 
-        {this.state.showLogin ? <LoginForm login={this.props.login}/> : null}
-        {this.state.showSignup ? <SignUpForm login={this.props.login} /> : null}      
+        {this.state.showLogin ? <LoginForm login={this.props.login} reset={this.reset}/> : null}
+        {this.state.showSignup ? <SignUpForm login={this.props.login} reset={this.reset}/> : null}      
                 {/* <h1>WelcomeContainer GOES HERE!</h1> */}
 			</div>
 		);

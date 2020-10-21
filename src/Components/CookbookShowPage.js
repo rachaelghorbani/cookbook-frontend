@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, CardGroup } from 'react-bootstrap';
+import { Container, Row, Col, CardGroup, Button } from 'react-bootstrap';
 import RecipeCard from './RecipeCard';
 import '../App.css';
 import SearchRecipesFromCookbook from './SearchRecipesFromCookbook'
@@ -10,7 +10,41 @@ class CookbookShowPage extends React.Component {
     state ={
         searchParam: "title",
         searchTerm: ""
+	}
+
+	localDeleteHandler = () => {
+        this.props.delete(this.props.cookbook.id)
     }
+	//create a followed instance in the db
+	localFollowHandler = () => {
+		this.props.follow(this.props.cookbook.id)
+	}
+
+	localUnfollowHandler = () => {
+		this.props.unfollow(this.props.cookbook.id)
+	}
+	
+	renderButtons = () => {
+		let userCBs = this.props.ownedCookbooks
+		let followedCBs = this.props.followedCookbooks
+		if (userCBs.find(cb => cb.id === this.props.cookbook.id)) {
+			return (
+				<div>
+					<Button>Edit</Button>
+					<Button className="btn btn-danger" onClick={this.localDeleteHandler}>Delete</Button>
+				</div>
+			)
+		} else if (followedCBs.find(cb => cb.id === this.props.cookbook.id)) {
+			return (
+            <div>
+				<Button onClick={this.localUnfollowHandler}>Unfollow</Button>
+			</div>
+            )
+		} else {
+			return <Button onClick={this.localFollowHandler}>Follow</Button>
+		}		
+	}
+
 	 renderRecipes = () => {
          if(this.state.searchParam === "title"){
              const filtered = this.props.cookbook.recipes.filter(recipe => recipe.title.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
@@ -29,8 +63,6 @@ class CookbookShowPage extends React.Component {
              return <CardGroup className='justify-content-center'>{recipes}</CardGroup>;
             
          }
-		// const recipes = this.props.cookbook.recipes.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />);
-		// return <CardGroup>{recipes}</CardGroup>;
 	};
 	 getTitleImage = () => {
 		let photoRecipe = this.props.cookbook.recipes.find((rec) => rec.photos.length > 0);
@@ -63,7 +95,10 @@ class CookbookShowPage extends React.Component {
 				</Col>
 			</Row>
 			<Row>
-				<Col className="d-flex justify-content-between align-items-center m-2">
+                <Col lg={12}>
+					{this.renderButtons()}
+                </Col>
+				<Col lg={12} className="d-flex justify-content-between align-items-center m-2">
 					Recipes found in this cookbook
                     <SearchRecipesFromCookbook searchParam={this.state.searchParam} searchTerm={this.state.searchTerm} changeHandler={this.searchHandler}/>
 				</Col>
