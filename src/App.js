@@ -33,7 +33,9 @@ class App extends React.Component {
             })
 			})
 		}
-	}
+    }
+    
+    test
 	
 	logoutUser = () => {
         window.sessionStorage.clear()
