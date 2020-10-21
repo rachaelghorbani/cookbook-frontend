@@ -7,9 +7,11 @@ import NewCookbookForm from '../Components/NewCookbookForm';
 import CookbookShowPage from '../Components/CookbookShowPage';
 import RecipeContainer from './RecipeContainer';
 import RecipeShowPage from '../Components/RecipeShowPage';
+import NewRecipeForm from '../Components/NewRecipeForm'
 
 const cookbooksURL = 'http://localhost:3000/cookbooks/';
 const commentsURL = 'http://localhost:3000/comments/';
+const recipesURL = 'http://localhost:3000/recipes/';
 
 class CookBookContainer extends React.Component {
 	state = {
@@ -17,6 +19,25 @@ class CookBookContainer extends React.Component {
 		newCookbookTitle: '',
 		newCookbookDescription: ''
 	};
+
+	addRecipe = (formData) => {
+        const options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+				Accepts: 'application/json',
+				Authorization: `Bearer ${window.sessionStorage.accessToken}`
+            },
+            body: JSON.stringify(formData)
+        }
+		console.log(formData)
+		fetch(recipesURL, options)
+		.then(resp => resp.json())
+		.then(recipe => {
+			// Find cookbook and update state
+			console.log(recipe)
+		})
+	}
 
 	getRecipe = (recipe_id) => {
 		let foundCb = this.state.allCookbooks.find((cb) => cb.recipes.find((r) => r.id === recipe_id));
@@ -202,6 +223,14 @@ class CookBookContainer extends React.Component {
 						/>
 					)}
 				/>
+                {/* new recipe */}
+                <Route path="/cookbooks/recipes/new" render={() => {
+                   return (
+                    <div className=" d-flex justify-content-center align-items-center m-0 p-0" style={{height: "75vh"}}>
+                   <NewRecipeForm cookbooks={this.state.allCookbooks} user={this.props.user} addRecipe={this.addRecipe}/>
+                   </div>
+                   )
+                }}/>
 
 				{/* all recipes */}
 				<Route

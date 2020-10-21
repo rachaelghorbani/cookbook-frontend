@@ -23,7 +23,7 @@ class NavBar extends React.Component {
                             <Link className="mx-2" to={`/cookbooks/${this.props.user.id}`}>My Cookbooks</Link>
                             <Link className="mx-2" to="/cookbooks/new">New Cookbook</Link>
                             <Link className="mx-2" to="/cookbooks/recipes">All Recipes</Link>
-                            <Link className="mx-2" to="/recipes/new">New Recipe</Link>
+                            <Link className="mx-2" to="/cookbooks/recipes/new">New Recipe</Link>
                             <Link className="mx-2" to="/" onClick={this.props.logout}>Logout</Link>
 							
 						</Nav>
