@@ -11,7 +11,8 @@ const cookbooksURL = 'http://localhost:3000/cookbooks/';
 class CookBookContainer extends React.Component {
 	state = {
         allCookbooks: [],
-        newCookbookTitle: ""
+        newCookbookTitle: "",
+        newCookbookDesc: ""
 	};
 
     getCookbook = (cookbook_id) => {
@@ -27,16 +28,16 @@ class CookBookContainer extends React.Component {
 		}
     };
     
-	renderFollowedCookbooks = () => {
-        const userLikedCookbooks = this.state.allCookbooks.filter(cookbook => {
-            for(let follower of cookbook.followers){
-                return follower.follower_id === this.props.user.id
-            }
-        })
-		if (userLikedCookbooks.length > 0) {
-			return userLikedCookbooks.map((cb) => <CookbookCard cookbook={cb} followed={true} />);
-		}
-	};
+	// renderFollowedCookbooks = () => {
+    //     const userLikedCookbooks = this.state.allCookbooks.filter(cookbook => {
+    //         for(let follower of cookbook.followers){
+    //             return follower.follower_id === this.props.user.id
+    //         }
+    //     })
+	// 	if (userLikedCookbooks.length > 0) {
+	// 		return userLikedCookbooks.map((cb) => <CookbookCard cookbook={cb} followed={true} />);
+	// 	}
+	// };
 
 	renderAllCookbooks = () => {
 		if (this.state.allCookbooks.length > 0) {
@@ -47,43 +48,44 @@ class CookBookContainer extends React.Component {
 	};
 
 	componentDidMount = () => {
-		fetch(cookbooksURL).then((resp) => resp.json()).then((cookbooks) => {
+		fetch(cookbooksURL, {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer <token>`
+            }}).then((resp) => resp.json()).then((cookbooks) => {
 			this.setState({ allCookbooks: cookbooks });
 		});
     };
     
     handleNewCookbookChange = e => {
-        this.setState({newCookbookTitle: e.target.value})
+        console.log(e.target.name)
+        this.setState({
+            [e.target.name]: e.target.value})
     }
 
     deleteCookbookHandler = cookbookId => {
-        const options = {
-            method: "DELETE"
-        }
-
-        fetch(cookbooksURL + cookbookId, options)
+        fetch(cookbooksURL + cookbookId, {method: "DELETE", headers: {Authorization: `Bearer <token>`}})
         .then(resp => {resp.json()})
         .then(() => {
             const newArr = [...this.state.allCookbooks]
-
             const filtered = newArr.filter(cb => cb.id !== cookbookId)
             this.setState({allCookbooks: filtered})
-            //not deleting it from the users own cookbooks
-            //find old item from api then filter tho
         })
     }
     submitNewForm = e => {
         e.preventDefault()
-        this.setState({newCookbookTitle: ""})
+        this.setState({newCookbookTitle: "", newCookBookDesc: ""})
         const newCookbook = {
             title: this.state.newCookbookTitle,
+            description: this.state.newCookbookDesc,
             user_id: this.props.user.id
         }
         const options = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Accepts": "application/json"
+                "Accepts": "application/json",
+                "Authorization": `Bearer <token>`
             },
             body: JSON.stringify(newCookbook)
         }
@@ -108,7 +110,7 @@ class CookBookContainer extends React.Component {
 		return (
 			<Switch>
                 {/* new cookbook */}
-                <Route path="/cookbooks/new" render={() => <NewCookbookForm title={this.state.newCookbookTitle}changeHandler={this.handleNewCookbookChange} submitHandler={this.submitNewForm}/>} />
+                <Route path="/cookbooks/new" render={() => <NewCookbookForm title={this.state.newCookbookTitle} description={this.state.newCookBookDesc} changeHandler={this.handleNewCookbookChange} submitHandler={this.submitNewForm}/>} />
 
                 {/* individual cookbook show page */}
 				<Route path="/cookbooks/:user_id/:cookbook_id" render={({match}) => {
@@ -124,7 +126,7 @@ class CookBookContainer extends React.Component {
                    return (
                    <CardGroup>
                         {this.renderOwnedCookbooks()}
-                        {this.renderFollowedCookbooks()}
+                        {/* {this.renderFollowedCookbooks()} */}
                     </CardGroup>
                    )
                 

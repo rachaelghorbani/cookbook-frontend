@@ -18,7 +18,6 @@ class LoginForm extends React.Component {
 
     submitHandler = (e) => {
         e.preventDefault()
-        console.log("In Local submitHandler()")
         this.props.login(this.state)
     }
 

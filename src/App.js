@@ -10,6 +10,7 @@ import CookBookContainer from './Containers/CookBookContainer';
 import Home from './Components/Home';
 
 const usersURL = 'http://localhost:3000/users/';
+const loginURL = 'http://localhost:3000/login';
 
 class App extends React.Component {
 	state = {
@@ -20,50 +21,35 @@ class App extends React.Component {
 		this.setState({ currentUser: {} });
 	};
 
-	loginUser = ({ username }) => {
-
+	loginUser = ({ username, password }) => {
 		let options = {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Accepts: 'application/json'
+				"Accepts": 'application/json'
 			},
-			body: JSON.stringify({ username })
+			body: JSON.stringify({ username: username, password: password})
 		};
-
-		fetch(usersURL, options).then((resp) => resp.json()).then((user) => {
+		fetch(loginURL, options).then((resp) => resp.json()).then((data) => {
 			this.setState({
-				currentUser: user
+				currentUser: data.user
 			});
 		});
 	};
 
 	componentsToRender = () => {
-
 		if (this.state.currentUser.username) {
 			return (
 				<div>
 					<Header />
 					<NavBar logout={this.logoutUser} user={this.state.currentUser} />
+					
 					<Switch>
 
-						<Route
-							path="/cookbooks"
-							render={(windowProps) => (
-								<CookBookContainer
-                                    user={this.state.currentUser}
-									windowProps={windowProps}
-									owned={this.state.currentUser.owned_cookbooks}
-									followed={this.state.currentUser.followed_cookbooks}
-								/>
-							)}
-						/>
-
-
-
+						<Route path="/cookbooks" render={(windowProps) => <CookBookContainer user={this.state.currentUser} windowProps={windowProps}/>}/>
 						<Route path="/" render={() => <Home user={this.state.currentUser} />} />
+
 					</Switch>
-					{/* <Route path={`/user/${this.state.currentUser.id}/cookbooks`} render={(windowProps) => <CookBookContainer windowProps={windowProps}owned={this.state.currentUser.owned_cookbooks} followed={this.state.currentUser.followed_cookbooks} /> } /> */}
 				</div>
 			);
 		} else {

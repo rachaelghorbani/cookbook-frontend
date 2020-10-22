@@ -13,8 +13,6 @@ class WelcomeContainer extends React.Component {
 
     loginHandler = () => {
         this.setState({showButtons: false, showLogin: true})
-        
-        //show login form and hide buttons
     }
 
     signupHandler = () => {
@@ -28,13 +26,10 @@ class WelcomeContainer extends React.Component {
                 {this.state.showButtons ? <div>
                     <Button onClick={this.loginHandler}variant="secondary">Login</Button>
                     <Button onClick={this.signupHandler}variant="secondary">Sign Up</Button>
-                </div> : null}
-            {/* {this.loginHandler}
-            {this.signupHandler} */}
+            </div> : null}
                 
         {this.state.showLogin ? <LoginForm login={this.props.login}/> : null}
         {this.state.showSignup ? <SignUpForm login={this.props.login} /> : null}      
-                {/* <h1>WelcomeContainer GOES HERE!</h1> */}
 			</div>
 		);
 	}
