@@ -9,12 +9,14 @@ import CookBookContainer from './Containers/CookBookContainer';
 import Home from './Components/Home';
 
 const loginURL = 'http://localhost:3000/login'
+const usersURL = 'http://localhost:3000/users'
 
 class App extends React.Component {
 
 	state = {
 		currentUser: {},
-		loginCount: 0
+		loginCount: 0,
+		signupCount: 0
 	};
 
     componentDidMount = () => {
@@ -41,6 +43,37 @@ class App extends React.Component {
 		this.setState({ currentUser: {} });
 	};
 
+	signup = (newUserObj) => {
+		let options = {
+			method: "POST",
+			headers: {         
+			'Content-Type': 'application/json',
+			"Accepts": 'application/json'
+			},
+			body: JSON.stringify({user: newUserObj})
+		}
+
+		fetch(usersURL, options)
+		.then(resp => resp.json())
+		.then(data => {		
+			console.log(data)	
+			if (data.user) {
+				window.sessionStorage.accessToken = data.jwt
+				this.setState({
+					currentUser: data.user
+				})
+			} else {
+
+				let newSignupCount = this.state.loginCount + 1
+				this.setState(prevState => {
+					return ({
+						signupCount: newSignupCount
+					})
+				})
+			}
+		})
+	}
+
 	loginUser = ({ username, password }) => {
         let options = {
             method: 'POST',
@@ -51,7 +84,6 @@ class App extends React.Component {
             body: JSON.stringify({ username: username, password: password})
         };
         fetch(loginURL, options).then((resp) => resp.json()).then((data) => {
-            console.log(data)
 			if (data.user) {
 				window.sessionStorage.accessToken = data.jwt
 				this.setState({
@@ -101,7 +133,7 @@ class App extends React.Component {
 				<div>
 					<Header />
                     <div className="welcome-background d-flex justify-content-center align-items-center m-0 p-0" style={{height: "75vh"}}>
-					<WelcomeContainer className="login-overlay"login={this.loginUser} />
+					<WelcomeContainer className="login-overlay"login={this.loginUser} signup={this.signup} />
                     </div>
 				</div>
 			);

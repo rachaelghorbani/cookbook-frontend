@@ -19,9 +19,9 @@ class SignUpForm extends React.Component {
     }
 
     submitHandler = (e) => {
-        e.preventDefault()
-        console.log("In Local submitHandler()")
-        this.props.login(this.state)
+		e.preventDefault()
+		this.props.reset()
+        this.props.signup(this.state)
     }
 
 	render() {

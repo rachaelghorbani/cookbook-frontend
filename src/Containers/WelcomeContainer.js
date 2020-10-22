@@ -30,7 +30,6 @@ class WelcomeContainer extends React.Component {
     }
     
 	render() {
-        console.log("Show Login?", this.state.showLogin)
 		return (
 			<div className="welcome-container login-overlay">
                 {this.state.showButtons ? <div style={{opacity: 1}}>
@@ -41,8 +40,7 @@ class WelcomeContainer extends React.Component {
             {this.signupHandler} */}
                 
         {this.state.showLogin ? <LoginForm login={this.props.login} reset={this.reset}/> : null}
-        {this.state.showSignup ? <SignUpForm login={this.props.login} reset={this.reset}/> : null}      
-                {/* <h1>WelcomeContainer GOES HERE!</h1> */}
+        {this.state.showSignup ? <SignUpForm signup={this.props.signup} reset={this.reset}/> : null}      
 			</div>
 		);
 	}
