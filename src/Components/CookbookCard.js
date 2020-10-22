@@ -34,7 +34,7 @@ class CookbookCard extends React.Component {
 						<Card.Text>{this.props.cookbook.description}</Card.Text>
                         </ListGroup>
                         <Link to={`/cookbooks/${this.props.cookbook.owner.owner_id}/${this.props.cookbook.id}`}>
-							<Button className='mx-1'variant="primary">See More</Button>
+							<Button className='mt-2 mx-1'variant="primary">See More</Button>
 						</Link>
 					</Card.Body>
 					{this.renderCardFooter()}
