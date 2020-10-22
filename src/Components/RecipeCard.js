@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, ListGroup } from 'react-bootstrap';
 import {Link} from 'react-router-dom'
 
 const RecipeCard = (props) => {
@@ -25,7 +25,9 @@ const RecipeCard = (props) => {
 		<Card style={{ width: '18rem', height: '25rem', margin: '5px' }}>
 			<Card.Img variant="top" src={showPhoto()} alt="You Should See Food Here." />
 			<Card.Body>
+            <ListGroup as="ul" variant="flush" className="overflow-auto" style={{height: 65}}>
 				<Card.Title>{props.recipe.title}</Card.Title>
+                </ListGroup>
 				<Card.Text>
 					{cardText()}
 				</Card.Text>

@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, CardGroup, Button } from 'react-bootstrap';
+import { Container, Row, Col, CardGroup, Button} from 'react-bootstrap';
 import RecipeCard from './RecipeCard';
 import '../App.css';
 import SearchRecipesFromCookbook from './SearchRecipesFromCookbook'
