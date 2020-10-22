@@ -8,14 +8,27 @@ const RecipeCard = (props) => {
 			return props.recipe.photos[0].img_url;
 		}
 	};
+
+	const cardText = () => {
+		if (props.owner_name) {
+			return (
+				<div>
+					<p>Included in <Link to={`/cookbooks/${props.owner_id}/${props.cookbook_id}`}>{props.cookbook_title}</Link></p>
+					<p>By: {props.owner_name}</p>
+				</div>
+			)
+		}
+	}
+
 	return (
         <div className="recipe-card">
 		<Card style={{ width: '18rem', height: '25rem', margin: '5px' }}>
 			<Card.Img variant="top" src={showPhoto()} alt="You Should See Food Here." />
 			<Card.Body>
 				<Card.Title>{props.recipe.title}</Card.Title>
-				<Card.Text>Cookbook description to go here!</Card.Text>
-				{/* /cookbooks/:user_id/:cookbook_id/recipe_id */}
+				<Card.Text>
+					{cardText()}
+				</Card.Text>
 				<Link to={`/cookbooks/${props.owner_id}/${props.cookbook_id}/${props.recipe.id}`}>
 					<Button variant="primary">See Recipe</Button>
 				</Link>

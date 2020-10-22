@@ -73,7 +73,7 @@ class CookBookContainer extends React.Component {
 		const userOwnedCookbooks = this.state.allCookbooks.filter((cb) => cb.owner.owner_id === this.props.user.id);
 		if (userOwnedCookbooks.length > 0) {
 			return userOwnedCookbooks.map((cb) => (
-				<CookbookCard key={cb.id} deleteHandler={this.deleteCookbookHandler} cookbook={cb} owned={true} />
+				<CookbookCard key={cb.id} deleteHandler={this.deleteCookbookHandler} cookbook={cb} user={this.props.user} owned={true} />
 			));
 		}
 	};
@@ -85,7 +85,7 @@ class CookBookContainer extends React.Component {
 			}
 		});
 		if (userLikedCookbooks.length > 0) {
-			return userLikedCookbooks.map((cb) => <CookbookCard cookbook={cb} key={cb.id} followed={true} />);
+			return userLikedCookbooks.map((cb) => <CookbookCard cookbook={cb} key={cb.id} user={this.props.user} followed={true} />);
 		}
 	};
 
@@ -114,6 +114,30 @@ class CookBookContainer extends React.Component {
 			[e.target.name]: e.target.value
 		});
 	};
+
+	deleteRecipeHandler = (recipeId) => {
+		let options = {
+			method: "DELETE",
+			headers: {
+				Authorization: `Bearer ${window.sessionStorage.accessToken}`
+			}
+		}
+
+		fetch(recipesURL + recipeId, options)
+		.then(resp => resp.json())
+		.then(data => {
+			let newArr = [ ...this.state.allCookbooks];
+			let foundCb = this.state.allCookbooks.find((cb) => cb.recipes.find((r) => r.id === recipeId));
+			let redirectUrl = `/cookbooks/${this.props.user.id}/${foundCb.id}`
+			let cbIndex = newArr.indexOf(foundCb)
+			let recipeIndex = foundCb.recipes.findIndex(r => r.id === recipeId)
+			foundCb.recipes.splice(recipeIndex, 1)
+			newArr.splice(cbIndex, 1, foundCb)
+			this.props.windowProps.history.push(redirectUrl);
+			this.setState({allCookbooks: newArr})
+
+		})
+	}
 
 	deleteCookbookHandler = (cookbookId) => {
 		const options = {
@@ -324,6 +348,7 @@ class CookBookContainer extends React.Component {
 									clickHandler={this.addCommentClickHandler}
 									user_id={this.props.user.id}
 									recipe={recipe}
+									delete={this.deleteRecipeHandler}
 								/>
 							);
 						}

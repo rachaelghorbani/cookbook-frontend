@@ -46,6 +46,27 @@
 .card-image {
 	height: 200px;
 }
+
+.card-footer {
+
+    background-color: rgba(0,0,0,.03);
+	border-top: 1px solid rgba(0,0,0,.125);
+	border-radius: 0 0 calc(.25rem - 1px) calc(.25rem - 1px);
+}
+
+.card-footer.fav {
+	padding: .25rem 0.5rem;
+	background-color: rgba(35, 173, 92, 0.200);
+	text-align: center;
+}
+
+.card-footer.owned {
+	padding: .25rem 0.5rem;
+	background-color: rgba(23, 73, 180, 0.200);
+	text-align: center;
+}
+
+
 .jumbo {
 	background: url(assets/lily-banse--YHSwy6uqvk-unsplashCropped.jpg);
 	background-size: cover;
@@ -92,4 +113,6 @@
 	/* position: absolute;
 	z-index: -1; */
 }
+
+
 

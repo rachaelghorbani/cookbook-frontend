@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, CardGroup, Carousel, Image, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col, CardGroup, Carousel, Image, ListGroup, Button } from 'react-bootstrap';
 import '../App.css';
 // import SearchRecipesFromCookbook from './SearchRecipesFromCookbook';
 import CommentsContainer from '../Containers/CommentsContainer'
@@ -37,7 +37,9 @@ class RecipeShowPage extends React.Component {
         )
     }
 
-  
+	localDeleteHandler = () => {
+		this.props.delete(this.props.recipe.id)
+	}
 
 	render() {
 		return (
@@ -45,7 +47,7 @@ class RecipeShowPage extends React.Component {
 				<Row>
 					<Col >
 						<Carousel>{this.getImages()}</Carousel>
-                        <ImageUploadForm recipe_id={this.props.recipe.id}addPhoto={this.props.addPhoto}/>
+                        <ImageUploadForm recipe_id={this.props.recipe.id} addPhoto={this.props.addPhoto}/>
                         <h4>Comments:</h4>
                         <CommentsContainer clickHandler={this.props.clickHandler}user_id={this.props.user_id} comments={this.props.recipe.comments} recipe_id={this.props.recipe.id}/>
 					</Col>
@@ -53,6 +55,10 @@ class RecipeShowPage extends React.Component {
 						<Row>
 							<Col lg={12} className="border-bottom  text-center recipe-title">
 								{this.props.recipe.title}
+							</Col>
+							<Col lg={12} className="mt-3">
+								<Button variant="secondary" size="sm" className="mr-2" >Edit</Button>
+								<Button variant="secondary" size="sm" className="mr-2" onClick={this.localDeleteHandler}>Delete</Button>
 							</Col>
 							<Col lg={12} className="  mt-3">
                                 <ListGroup as="ul" variant="flush" className="overflow-auto" style={{height: 400}}>

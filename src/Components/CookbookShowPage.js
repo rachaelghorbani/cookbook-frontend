@@ -30,8 +30,8 @@ class CookbookShowPage extends React.Component {
 		if (userCBs.find(cb => cb.id === this.props.cookbook.id)) {
 			return (
 				<div>
-					<Button>Edit</Button>
-					<Button className="btn btn-danger" onClick={this.localDeleteHandler}>Delete</Button>
+					<Button variant="secondary" size="sm" className="mr-2">Edit</Button>
+					<Button variant="secondary" size="sm" className="mr-2" onClick={this.localDeleteHandler}>Delete</Button>
 				</div>
 			)
 		} else if (followedCBs.find(cb => cb.id === this.props.cookbook.id)) {
@@ -45,10 +45,16 @@ class CookbookShowPage extends React.Component {
 		}		
 	}
 
+
+	// <p>Included in <Link to={`/cookbooks/${props.owner_id}/${props.cookbook_id}`}>{props.cookbook_title}</Link></p>
+	// <p>By: {props.owner_name}</p></Card.Text>
+
+	// ={`/cookbooks/${props.owner_id}/${props.cookbook_id}`}>{props.cookbook_title}
+
 	 renderRecipes = () => {
          if(this.state.searchParam === "title"){
              const filtered = this.props.cookbook.recipes.filter(recipe => recipe.title.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
-             const recipes = filtered.map((recipe) => <RecipeCard key={recipe.id} owner_id={this.props.cookbook.owner.owner_id} cookbook_id={this.props.cookbook.id}recipe={recipe} />);
+             const recipes = filtered.map((recipe) => <RecipeCard key={recipe.id} owner_id={this.props.cookbook.owner.owner_id} cookbook_id={this.props.cookbook.id} recipe={recipe} owner_name={this.props.cookbook.owner.owner_name} cookbook_title={this.props.cookbook.title}/>);
 		    return <CardGroup className='justify-content-center'>{recipes}</CardGroup>;
 
          }else if (this.state.searchParam === "ingredient"){
@@ -89,6 +95,9 @@ class CookbookShowPage extends React.Component {
 						<Col lg={12} className="border-bottom  text-center recipe-title">
 							{this.props.cookbook.title}
 						</Col>
+						<Col lg={12} className="mt-3">
+							{this.renderButtons()}
+						</Col>
 						<Col lg={12} className=" text-center mt-3">
 							{this.props.cookbook.description}
 						</Col>
@@ -96,11 +105,8 @@ class CookbookShowPage extends React.Component {
 				</Col>
 			</Row>
 			<Row>
-                <Col lg={12}>
-					{this.renderButtons()}
-                </Col>
 				<Col lg={12} className="d-flex justify-content-between align-items-center m-2">
-					Recipes found in this cookbook
+					Recipes found in this cookbook:
                     <SearchRecipesFromCookbook searchParam={this.state.searchParam} searchTerm={this.state.searchTerm} changeHandler={this.searchHandler}/>
 				</Col>
 			</Row>

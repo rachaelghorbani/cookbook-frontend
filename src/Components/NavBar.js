@@ -8,7 +8,7 @@ class NavBar extends React.Component {
 		return (
 			<div className="navbar p-0 d-flex ">
 				<Navbar className="w-100 m-0" bg="light" expand="lg">
-					<Navbar.Brand >Welcome to Cookbooks {this.props.user.username}!</Navbar.Brand>
+					<Navbar.Brand >Welcome to Cookbooks {this.props.user.first_name}!</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 
 					<Navbar.Collapse id="basic-navbar-nav">
