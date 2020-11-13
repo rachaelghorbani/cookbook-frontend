@@ -34,6 +34,7 @@ A user can:
 * PostgreSQL
 * BCrypt
 * JWT
+* Spoonacular API
 * Cloudinary
 * Active Model Seriazliers
 
