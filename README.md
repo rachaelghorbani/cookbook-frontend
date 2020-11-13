@@ -5,6 +5,7 @@ Welcome to Cookbooks: A way to share family history through recipes!
 This app was built in collaboration with [Anson Nickel](https://github.com/anickel101) as a way to upload, share, and discover family cookbooks and recipies. The idea came from the thought that most family recipes and cookbooks, especially those which have been around for generations, are often hand written and hard to keep track of. We sought to create a better way to both share one's own cookbooks and recipes, and discover new ones!
 
 ## Video Demo
+https://www.loom.com/share/f546c309f3d3488eb624bc7b5bb59617
 
 ## Application Features
 
