@@ -68,7 +68,8 @@
 
 
 .jumbo {
-	background: url(assets/lily-banse--YHSwy6uqvk-unsplashCropped.jpg);
+    background: url(assets/lily-banse--YHSwy6uqvk-unsplashCropped.jpg);
+    
 	background-size: cover;
 	height: 200px;
 	position: relative;
